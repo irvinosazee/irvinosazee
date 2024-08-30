@@ -1,16 +1,37 @@
-## Hi there 👋
+# Hi, I'm IRVIN OSAZEE! 👋
 
-<!--
-**irvinosazee/irvinosazee** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I am a passionate Software Engineer, driven by a curiosity for technology , a love for writing code and passion for building software applications. My journey involves delving into the world of software development, exploring new ideas, and sharing my insights with the community.
 
-Here are some ideas to get you started:
+![<username>'s Stats](https://github-readme-stats.vercel.app/api?username=irvinosazee&theme=vue-dark&show_icons=true&hide_border=true&count_private=true)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🚀 About Me
+
+- 🔭 I'm currently pursuing my Machelor's in Software Engineering at Veritas University.
+- 🌐 Proud member of the Trivia Dev's tech community.
+
+## My Articles
+- [JavaScript Engine and Runtime Explained](https://www.freecodecamp.org/news/javascript-engine-and-runtime-explained/)
+
+
+## Tech Stack
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,ts,git,github,vscode,figma,tailwind,vite,react,py,pycharm,django,flask,flutter,dart,swift,java,php,nodejs,npm,postgres,mysql,mongodb,vercel,astro,nextjs,svelte,firebase,supabase,jest,docker,postman,pytorch,tensorflow,threejs)
+
+## 🌱 Currently Exploring
+
+  - Devloping Full Stack PWA Web apps.
+  - Devloping Mobile apps with fluttter and dart.
+  - Devloping Ai based projects and pushing myself to the limit.
+  - Styling with Tailwind CSS to create modern and responsive user interfaces.
+  - Building server-side applications with Django, a powerful Python web framework.
+  - Diving into PostgreSQL for efficient and scalable database management.
+
+ ## 🏆 Achievements
+ 
+- 🌟 Self Developed programmer
+
+  
+## 📬 Get in Touch
+
+- Connect with me on [X formerly Twitter](https://twitter.com/irvindevs)
+
+Thanks for stopping by! Let's connect and explore the fascinating world of technology together. 🚀
