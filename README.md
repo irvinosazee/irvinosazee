@@ -2,15 +2,12 @@
 
 I am a passionate Software Engineer, driven by a curiosity for technology , a love for writing code and passion for building software applications. My journey involves delving into the world of software development, exploring new ideas, and sharing my insights with the community.
 
-![<username>'s Stats](https://github-readme-stats.vercel.app/api?username=irvinosazee&theme=vue-dark&show_icons=true&hide_border=true&count_private=true)
+![Irvin Osazee's Stats](https://github-readme-stats.vercel.app/api?username=irvinosazee&theme=vue-dark&show_icons=true&hide_border=true&count_private=true)
 
 ## 🚀 About Me
 
 - 🔭 I'm currently pursuing my Machelor's in Software Engineering at Veritas University.
 - 🌐 Proud member of the Trivia Dev's tech community.
-
-## My Articles
-- [JavaScript Engine and Runtime Explained](https://www.freecodecamp.org/news/javascript-engine-and-runtime-explained/)
 
 
 ## Tech Stack
