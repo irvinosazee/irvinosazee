@@ -80,3 +80,15 @@ test("formatCount", () => {
   assert.equal(formatCount(30), "30");
   assert.equal(formatCount(123456), "123,456");
 });
+
+test("light slate sets ember text in the darker AA ember, marks stay true ember", () => {
+  const light = renderSlate("light");
+  assert.ok(light.includes('fill="#b8360f"'), "status text uses #b8360f");
+  assert.ok(!light.includes('fill="#ff6a44"'), "no light-on-light ember text");
+  assert.ok(light.includes('fill="#ff5227"'), "dots, cursor and full stop keep #ff5227");
+  assert.ok(!renderSlate("dark").includes("#b8360f"), "dark theme unchanged");
+});
+
+test("slate title includes the kicker in plain words", () => {
+  assert.ok(titleOf(renderSlate("dark")).includes("Production: the one who built this"));
+});

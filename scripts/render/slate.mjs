@@ -61,7 +61,7 @@ function heading(t) {
   const name = textRuns(
     [
       { str: SLATE.name, style: display, attrs: { fill: t.ink } },
-      { str: ".", style: display, attrs: { fill: t.emberText } },
+      { str: ".", style: display, attrs: { fill: t.emberMark } },
     ],
     PAD_X - 3, // Archivo's I has side bearing; pull it onto the text edge.
     NAME.y
@@ -105,7 +105,7 @@ export function renderSlate(themeName) {
   const { pattern, band } = clapper(t);
   const [role, location, since, status] = SLATE.cells.map((c) => c.value);
   const title =
-    `${SLATE.name}. ${SLATE.line} ` +
+    `${SLATE.name}. ${SLATE.kickerText}. ${SLATE.line} ` +
     `Role: ${role}. Location: ${location}. On set since ${since}. Status: ${status}.`;
   return svgDoc({
     height: HEIGHT,

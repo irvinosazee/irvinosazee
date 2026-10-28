@@ -3,7 +3,7 @@ import { FONT } from "../theme.mjs";
 import { RECEIPTS } from "../content.mjs";
 import { WIDTH, themeOf, text, wrap, svgDoc, cardFrame, hline } from "./svg.mjs";
 
-const PAD = { x: 22, top: 6, bottom: 18 };
+const PAD = { x: 22, top: 18, bottom: 18 };
 const KEY_COL = 130;
 const GAP = 16;
 const ROW_PAD_Y = 10;

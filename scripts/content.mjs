@@ -18,6 +18,8 @@ const lineRuns = [
 
 export const SLATE = {
   kicker: "PRODUCTION ── THE ONE WHO BUILT THIS",
+  /** The kicker in plain words, for alt text. */
+  kickerText: "Production: the one who built this",
   name: "Irvin Osazee",
   /** The serif line as styled runs ("and" in italic). */
   lineRuns,

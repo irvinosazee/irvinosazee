@@ -6,6 +6,7 @@ export const THEMES = {
     inkDim: "#8c8d93",
     ember: "#ff5227",
     emberText: "#ff6a44",
+    emberMark: "#ff6a44",
     line: "rgba(242,241,238,.09)",
     lineStrong: "rgba(242,241,238,.24)",
   },
@@ -15,7 +16,9 @@ export const THEMES = {
     ink: "#17181b",
     inkDim: "#5d5e64",
     ember: "#ff5227",
-    emberText: "#ff6a44",
+    // R7: ember text darkened for AA on the light ground (5.2:1); marks keep the true ember.
+    emberText: "#b8360f",
+    emberMark: "#ff5227",
     line: "rgba(23,24,27,.12)",
     lineStrong: "rgba(23,24,27,.32)",
   },

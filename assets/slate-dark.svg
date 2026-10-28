@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="830" height="298" viewBox="0 0 830 298" role="img" aria-labelledby="title"><title id="title">Irvin Osazee. Software engineer. I ship the whole film: the product, the code, and the launch. Role: Software Engineer. Location: Abuja · GMT+1. On set since 2023. Status: Available for work.</title><style>
+<svg xmlns="http://www.w3.org/2000/svg" width="830" height="298" viewBox="0 0 830 298" role="img" aria-labelledby="title"><title id="title">Irvin Osazee. Production: the one who built this. Software engineer. I ship the whole film: the product, the code, and the launch. Role: Software Engineer. Location: Abuja · GMT+1. On set since 2023. Status: Available for work.</title><style>
 @keyframes clap { 0% { transform: rotate(-14deg) } 60% { transform: rotate(1deg) } 100% { transform: rotate(0) } }
 @keyframes rise { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
 @keyframes blink { 50% { opacity: 0 } }
