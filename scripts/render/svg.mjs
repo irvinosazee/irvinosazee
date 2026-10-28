@@ -73,9 +73,9 @@ export const grainOpacity = (name) => (name === "light" ? 0.05 : 0.07);
 export const REDUCED_MOTION = "@media (prefers-reduced-motion: reduce) { * { animation: none !important } }";
 
 /** A full standalone SVG document with an accessible title. */
-export function svgDoc({ height, title, defs = "", style = "", body }) {
+export function svgDoc({ width = WIDTH, height, title, defs = "", style = "", body }) {
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}" role="img" aria-labelledby="title">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title">` +
     `<title id="title">${esc(title)}</title>` +
     (style ? `<style>${style}</style>` : "") +
     (defs ? `<defs>${defs}</defs>` : "") +

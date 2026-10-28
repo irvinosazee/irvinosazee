@@ -7,6 +7,7 @@ export const LINKS = {
   site: SITE,
   hire: `${SITE}/contact`,
   linkedin: "https://www.linkedin.com/in/irvin-osazee",
+  projects: `${SITE}/projects`,
   caseFile: (slug) => `${SITE}/projects/${slug}`,
 };
 

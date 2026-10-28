@@ -1,0 +1,43 @@
+{
+  "total": 5084,
+  "activeDays": 233,
+  "longestStreak": 27,
+  "shipped": 30,
+  "dailies": [
+    {
+      "slug": "brand-bible",
+      "name": "Brand Bible",
+      "cover": "https://utfs.io/f/FjrylqusFJ8WO6z03PnPxHOqSE1sZt6Ql4U8eGXMru3fnoiI"
+    },
+    {
+      "slug": "realtime-chat",
+      "name": "Private Chat",
+      "cover": "https://utfs.io/f/FjrylqusFJ8W3GDiNhBRLlzReG1o9TrPQ4Z23t7vdVcYJyhi"
+    },
+    {
+      "slug": "portfolio-v2",
+      "name": "Portfolio v2",
+      "cover": "https://utfs.io/f/FjrylqusFJ8WeZOtpMy8dhY7X2Nu6O1TwkEezo30WUvAFljQ"
+    },
+    {
+      "slug": "graphic-design-agency-template",
+      "name": "Graphic Design Agency Template",
+      "cover": "https://utfs.io/f/FjrylqusFJ8WmjJYJa076fEGzAMeQukUVlRTN9jvW8qwScKp"
+    },
+    {
+      "slug": "heartrank",
+      "name": "HeartRank",
+      "cover": "https://utfs.io/f/FjrylqusFJ8WGmPaRhg5UJI2CxEciBrHq76pYsFGwMgPdy1Q"
+    },
+    {
+      "slug": "vuna-calc",
+      "name": "VUNA-Calc · Veritas Journey",
+      "cover": "https://utfs.io/f/FjrylqusFJ8WvkgTCMoRFxmVEaPrKTgNq0OkjW3ZlCszi76y"
+    }
+  ],
+  "posterCovers": {
+    "shipreel": "https://utfs.io/f/FjrylqusFJ8WYvB7A2Wmt5wdKg6brlXxLU0BIJMuTjiEoFpv",
+    "trivia-devs": "https://utfs.io/f/FjrylqusFJ8WnQsOSaU5hfVZoFBUTNqawli2rcu0t3m961bM",
+    "iya-guardians-of-the-sky-kings": "https://utfs.io/f/FjrylqusFJ8WWXxX2gwA2rcN94thJHX7GT5B6VY0SbPjMKw1"
+  }
+}
