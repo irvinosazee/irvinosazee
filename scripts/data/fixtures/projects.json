@@ -1,0 +1,93 @@
+{
+  "docs": [
+    {
+      "slug": "shipreel",
+      "name": "shipreel",
+      "rating": 9,
+      "date": "2026-09-21T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WYvB7A2Wmt5wdKg6brlXxLU0BIJMuTjiEoFpv"
+      }
+    },
+    {
+      "slug": "trivia-devs",
+      "name": "Trivia Devs",
+      "rating": 10,
+      "date": "2026-08-15T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WnQsOSaU5hfVZoFBUTNqawli2rcu0t3m961bM"
+      }
+    },
+    {
+      "slug": "iya-guardians-of-the-sky-kings",
+      "name": "Iya: Guardians of the Sky-Kings",
+      "rating": 8,
+      "date": "2026-06-26T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WWXxX2gwA2rcN94thJHX7GT5B6VY0SbPjMKw1"
+      }
+    },
+    {
+      "slug": "brand-bible",
+      "name": "Brand Bible",
+      "rating": 9,
+      "date": "2026-09-13T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WO6z03PnPxHOqSE1sZt6Ql4U8eGXMru3fnoiI"
+      }
+    },
+    {
+      "slug": "heartrank",
+      "name": "HeartRank",
+      "rating": 8,
+      "date": "2026-08-27T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WGmPaRhg5UJI2CxEciBrHq76pYsFGwMgPdy1Q"
+      }
+    },
+    {
+      "slug": "vuna-calc",
+      "name": "VUNA-Calc · Veritas Journey",
+      "rating": 8,
+      "date": "2026-06-13T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WvkgTCMoRFxmVEaPrKTgNq0OkjW3ZlCszi76y"
+      }
+    },
+    {
+      "slug": "farm-ease",
+      "name": "FarmEase",
+      "rating": 8,
+      "date": "2026-04-19T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8W6LpJAvIwrU0VlRxfqFBeEgAtjCIMn8vPu15h"
+      }
+    },
+    {
+      "slug": "portfolio-v2",
+      "name": "Portfolio v2",
+      "rating": 9,
+      "date": "2025-07-25T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8WeZOtpMy8dhY7X2Nu6O1TwkEezo30WUvAFljQ"
+      }
+    },
+    {
+      "slug": "realtime-chat",
+      "name": "Private Chat",
+      "rating": 9,
+      "date": "2025-12-10T00:00:00.000Z",
+      "image": {
+        "url": "https://utfs.io/f/FjrylqusFJ8W3GDiNhBRLlzReG1o9TrPQ4Z23t7vdVcYJyhi"
+      }
+    },
+    {
+      "slug": "no-cover-draft",
+      "name": "No Cover Project",
+      "rating": 10,
+      "date": "2026-10-01T00:00:00.000Z",
+      "image": null
+    }
+  ],
+  "totalDocs": 30
+}

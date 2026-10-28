@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+  /* A poster is a photo card: one file serves both themes (R9), so it stays on film. */
+  :root { --film: #121316; --film2: #18191d; --ink: #f2f1ee; --ember: #ff6a44; --edge: rgba(242,241,238,.09); --mark: rgba(242,241,238,.24); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; }
+  .poster {
+    position: relative; width: 270px; height: 360px; overflow: hidden;
+    background: var(--film); display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .poster.blank { background: linear-gradient(to bottom, var(--film2), var(--film) 70%); }
+  .cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); }
+  .shade { position: absolute; inset: 0; background: linear-gradient(to top, #0c0d10 20%, rgba(12,13,16,.82) 42%, rgba(12,13,16,0) 76%); }
+  /* Crop marks: what a frame looks like before the print arrives. */
+  .crop { position: absolute; width: 14px; height: 14px; border: 0 solid var(--mark); }
+  .crop.tl { top: 16px; left: 16px; border-top-width: 1px; border-left-width: 1px; }
+  .crop.tr { top: 16px; right: 16px; border-top-width: 1px; border-right-width: 1px; }
+  .grain { position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .edge { position: absolute; inset: 0; border: 1px solid var(--edge); pointer-events: none; }
+  .t { position: relative; padding: 0 18px 18px; }
+  .kicker { font: 500 10px/1 "Geist Mono", monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); }
+  .name { margin-top: 9px; font: 700 30px/.92 "Archivo", sans-serif; letter-spacing: -.035em; color: var(--ink); }
+  .line { margin: 9px 0 0; font: 400 12.5px/1.42 "Instrument Sans", sans-serif; color: #c9c6c0; }
+</style>
+</head>
+<body>
+<div class="poster" id="poster">
+  <div class="shade"></div>
+  <div class="grain"></div>
+  <div class="t">
+    <div class="kicker" id="kicker"></div>
+    <div class="name" id="name"></div>
+    <p class="line" id="line"></p>
+  </div>
+  <div class="edge"></div>
+</div>
+<script>
+  // Called by raster.mjs through page.evaluate.
+  window.render = ({ vars, poster, coverUrl }) => {
+    for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(k, v);
+    document.getElementById("kicker").textContent = poster.kicker;
+    document.getElementById("name").textContent = poster.name;
+    document.getElementById("line").textContent = poster.line;
+    const el = document.getElementById("poster");
+    if (coverUrl) {
+      const img = document.createElement("img");
+      img.className = "cover";
+      img.alt = "";
+      img.style.objectPosition = poster.objectPosition || "center";
+      img.src = coverUrl;
+      el.prepend(img);
+    } else {
+      el.classList.add("blank");
+      for (const c of ["tl", "tr"]) {
+        const m = document.createElement("div");
+        m.className = `crop ${c}`;
+        el.prepend(m);
+      }
+    }
+  };
+</script>
+</body>
+</html>

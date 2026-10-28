@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+  /* Theme tokens are set by raster.mjs; these are the dark defaults. */
+  :root { --ground: #121316; --ground2: #18191d; --inkDim: #8c8d93; --emberText: #ff6a44; --line: rgba(242,241,238,.09); --hole: rgba(242,241,238,.22); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; }
+  .strip { width: 830px; background: var(--ground); border: 1px solid var(--line); }
+  .band { height: 22px; padding: 0 9px; display: flex; align-items: center; justify-content: space-between; }
+  .hole { width: 11px; height: 7px; border-radius: 1.5px; background: var(--hole); }
+  .row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 2px 12px 0; }
+  figure { margin: 0; min-width: 0; }
+  .frame { aspect-ratio: 16 / 10; background: var(--ground2); border: 1px solid var(--line); overflow: hidden; }
+  .frame img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); }
+  figcaption, .nocap { margin-top: 7px; height: 12px; }
+  figcaption {
+    font: 400 10px/12px "Geist Mono", monospace; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--inkDim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  figcaption b { font-weight: 500; color: var(--emberText); }
+</style>
+</head>
+<body>
+<div class="strip" id="strip">
+  <div class="band" id="top"></div>
+  <div class="row" id="row"></div>
+  <div class="band" id="bottom"></div>
+</div>
+<script>
+  const SLOTS = 6;
+  const FIRST_NUMBER = 4; // the three posters are 01–03
+
+  // Called by raster.mjs through page.evaluate.
+  window.render = ({ vars, frames }) => {
+    for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(k, v);
+    for (const id of ["top", "bottom"]) {
+      const band = document.getElementById(id);
+      for (let i = 0; i < 37; i++) band.append(Object.assign(document.createElement("div"), { className: "hole" }));
+    }
+    const row = document.getElementById("row");
+    for (let i = 0; i < SLOTS; i++) {
+      const f = frames[i];
+      const fig = document.createElement("figure");
+      const frame = document.createElement("div");
+      frame.className = "frame";
+      fig.append(frame);
+      if (f) {
+        const cap = document.createElement("figcaption");
+        if (f.cover) {
+          const img = document.createElement("img");
+          img.alt = "";
+          img.src = f.cover;
+          frame.append(img);
+        }
+        const num = document.createElement("b");
+        num.textContent = String(FIRST_NUMBER + i).padStart(2, "0");
+        cap.append(num, ` · ${f.name}`);
+        fig.append(cap);
+      } else {
+        // An unexposed frame keeps the strip's rhythm; its caption line stays empty.
+        fig.append(Object.assign(document.createElement("div"), { className: "nocap" }));
+      }
+      row.append(fig);
+    }
+  };
+</script>
+</body>
+</html>

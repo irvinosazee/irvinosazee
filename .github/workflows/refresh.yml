@@ -1,0 +1,52 @@
+name: Refresh stats and dailies
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      # The tests render posters too, so they run once chromium is installed.
+      - run: npm test
+
+      - name: Build (live)
+        id: build
+        continue-on-error: true
+        run: node scripts/build.mjs --live
+
+      - name: Commit and push
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898799+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh stats and dailies"
+            git push
+          fi
+
+      - name: Fail run if build fell back
+        if: steps.build.outcome == 'failure'
+        run: exit 1

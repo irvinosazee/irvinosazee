@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README combined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--gh-bg:#0d1117;--gh-fg:#e6edf3;--gh-muted:#8d96a0;--gh-border:#30363d;--gh-canvas:#010409;
+        --film:#121316;--film2:#1a1b1f;--ink:#f2efe9;--dim:#9a9aa1;--ember:#ff4d1c;--emberText:#ff6a3d;--line:#2a2b2f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--gh-canvas);color:var(--gh-fg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+  .picker{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 16px;background:#161b22;border-bottom:1px solid var(--gh-border)}
+  .picker b{margin-right:8px}
+  .picker button{font:inherit;color:var(--gh-fg);background:#21262d;border:1px solid var(--gh-border);border-radius:6px;padding:6px 12px;cursor:pointer}
+  .picker button.on{background:#1f6feb33;border-color:#1f6feb}
+  .picker .note{color:var(--gh-muted);margin-left:auto;font-size:12px}
+  .ghnav{display:flex;gap:24px;padding:0 24px;border-bottom:1px solid var(--gh-border);background:var(--gh-canvas);color:var(--gh-fg)}
+  .ghnav span{padding:12px 0}.ghnav span.on{border-bottom:2px solid #f78166;font-weight:600}
+  .page{display:grid;grid-template-columns:296px 1fr;gap:24px;max-width:1280px;margin:0 auto;padding:24px}
+  @media(max-width:900px){.page{grid-template-columns:1fr}.side{display:none}}
+  .side .av{width:296px;height:296px;border-radius:50%;background:#2d333b url('https://github.com/irvinosazee.png') center/cover;border:1px solid var(--gh-border)}
+  .side h1{font-size:24px;margin:16px 0 0;font-weight:600}.side .h{color:var(--gh-muted);font-size:20px;font-weight:300}
+  .readme{border:1px solid var(--gh-border);border-radius:6px;background:var(--gh-bg);padding:24px 32px;min-width:0}
+  .readme .path{font:12px ui-monospace,Menlo,monospace;color:var(--gh-muted);margin-bottom:16px}
+  .readme h2{font-size:1.5em;border-bottom:1px solid var(--gh-border);padding-bottom:.3em;margin:28px 0 16px;font-weight:600}
+  .readme p,.readme li{color:var(--gh-fg)}
+  .readme a{color:#4493f8;text-decoration:none}
+  .img{display:block;max-width:100%}
+  .v{display:none}.v.on{display:block}
+  .svgnote{font:11px ui-monospace,Menlo,monospace;color:#7d8590;margin:6px 0 0}
+  /* —— shared “image” blocks (these become SVG/PNG files in the real README) —— */
+  .card{background:var(--film);color:var(--ink);border:1px solid var(--line);position:relative;overflow:hidden}
+  .grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .mono{font-family:"Geist Mono",ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;font-size:11px;color:var(--dim)}
+  .disp{font-family:Archivo,sans-serif;font-weight:700;letter-spacing:-.035em;line-height:.92}
+  .serif{font-family:"Instrument Serif",serif}
+  .ember{color:var(--emberText)}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes rec{0%,100%{opacity:1}50%{opacity:.25}}
+  .cur{display:inline-block;width:.5em;height:1em;background:var(--ember);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  .rec{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ember);animation:rec 1.6s infinite;margin-right:8px}
+  .r1{animation:rise .7s .1s both}.r2{animation:rise .7s .35s both}.r3{animation:rise .7s .6s both}
+  table.posters{width:100%;border-collapse:collapse}table.posters td{width:33.3%;padding:0 6px 0 0;vertical-align:top}
+  .poster{aspect-ratio:3/4;background:var(--film);border:1px solid var(--line);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+  .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
+  .poster .shade{position:absolute;inset:0;background:linear-gradient(to top,#0c0d10 18%,#0c0d10cc 40%,transparent 75%)}
+  .poster .t{position:relative;padding:14px}
+  .poster .t .disp{font-size:24px;color:var(--ink)}
+  .poster .t p{margin:6px 0 0;font-size:12px;color:#c9c6c0;line-height:1.4}
+  .receipts{font-family:"Geist Mono",ui-monospace,monospace;font-size:13px}
+  .receipts div{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:9px 0;border-top:1px solid var(--line)}
+  .receipts div:last-child{border-bottom:1px solid var(--line)}
+  .receipts .k{color:var(--dim);text-transform:uppercase;letter-spacing:.12em;font-size:11px;padding-top:2px}
+  .receipts .v2{color:var(--ink)}
+  .credits{display:grid;grid-template-columns:160px 1fr;gap:10px 18px;align-items:center}
+  .credits .mono{text-align:right}
+  .credits img{height:36px}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .btn{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:10px 16px;border:1px solid var(--line);color:var(--ink);background:var(--film)}
+  .btn.hot{background:var(--ember);border-color:var(--ember);color:#121316}
+  .gh-md-only{color:var(--gh-fg)}
+  .label-chip{display:inline-block;font:11px ui-monospace,Menlo,monospace;color:#7d8590;border:1px dashed #30363d;padding:2px 6px;border-radius:4px;margin-left:8px;vertical-align:middle}
+
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-top:0;background:var(--film)}
+  .strip>div{padding:14px 22px;border-right:1px solid var(--line)}.strip>div:last-child{border-right:0}
+  .strip .n{font-family:Archivo,sans-serif;font-weight:700;font-size:30px;letter-spacing:-.03em;color:var(--ink);margin-top:4px}
+  .filmstrip{background:#0b0c0e;border:1px solid var(--line);padding:18px 10px;position:relative}
+  .filmstrip::before,.filmstrip::after{content:"";position:absolute;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,transparent 0 10px,#2a2b2f 10px 22px)}
+  .filmstrip::before{top:5px}.filmstrip::after{bottom:5px}
+  .filmstrip .row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .filmstrip img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;filter:saturate(.85)}
+  .filmstrip figcaption{font-family:"Geist Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @keyframes clap{0%{transform:rotate(-14deg)}60%{transform:rotate(1deg)}100%{transform:rotate(0)}}
+  .clap{transform-origin:0 100%;animation:clap .6s .2s cubic-bezier(.3,1.4,.5,1) both}
+</style>
+</head>
+<body>
+<div class="picker"><b>README · A + B combined</b><span class="note">Mock of your GitHub profile, dark mode. Dashed labels mark what becomes an image file.</span></div>
+<div class="ghnav"><span class="on">Overview</span><span>Repositories</span><span>Projects</span><span>Packages</span><span>Stars</span></div>
+<div class="page">
+  <aside class="side"><div class="av"></div><h1>Irvin Osazee</h1><div class="h">irvinosazee · he/him</div><p>Software Engineer</p>
+    <p style="color:var(--gh-muted)">Abuja, Nigeria<br><a style="color:var(--gh-fg)">https://www.irvinosazee.me</a></p></aside>
+  <main class="readme">
+    <div class="path">irvinosazee / README.md</div>
+
+    <div class="card" style="padding:0">
+      <div class="clap" style="height:46px;background:repeating-linear-gradient(-45deg,#f2efe9 0 26px,#121316 26px 52px);border-bottom:2px solid #f2efe9"></div>
+      <div style="padding:24px 26px 22px;border-bottom:1px solid var(--line)" class="grain">
+        <div class="mono r1"><span class="rec"></span>Production ── The one who built this</div>
+        <div class="disp r2" style="font-size:clamp(44px,6.4vw,76px);margin-top:12px">Irvin Osazee<span class="ember">.</span></div>
+        <div class="serif r3" style="font-size:23px;color:#d8d4cd;margin-top:12px;line-height:1.25">Software engineer. I ship the whole film: the product, the code, <i>and</i> the launch.<span class="cur"></span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr)">
+        <div style="padding:14px 22px;border-right:1px solid var(--line)"><div class="mono">Role</div><div style="font-size:15px;margin-top:6px">Software Engineer</div></div>
+        <div style="padding:14px 22px;border-right:1px solid var(--line)"><div class="mono">Location</div><div style="font-size:15px;margin-top:6px">Abuja · GMT+1</div></div>
+        <div style="padding:14px 22px;border-right:1px solid var(--line)"><div class="mono">On set since</div><div style="font-size:15px;margin-top:6px;font-family:'Geist Mono',monospace">2023</div></div>
+        <div style="padding:14px 22px"><div class="mono">Status</div><div style="font-size:15px;margin-top:6px" class="ember"><span class="rec"></span>Available for work</div></div>
+      </div>
+    </div>
+    <div class="strip">
+      <div><div class="mono">Takes this year</div><div class="n">5,077</div></div>
+      <div><div class="mono">Days on set</div><div class="n">233</div></div>
+      <div><div class="mono">Longest run</div><div class="n">27 days</div></div>
+      <div><div class="mono">Case files</div><div class="n">30</div></div>
+    </div>
+    <div class="svgnote">slate.svg · clapper snaps shut, lines rise in · the bottom strip is your real contribution count (private org work included), refreshed daily by a GitHub Action <span class="label-chip">image</span></div>
+
+    <p class="serif" style="font-size:24px;line-height:1.3;margin:24px 0 0;color:var(--gh-fg)">I build products end to end, then go the extra mile on the parts nobody asks for: the tests, the launch video, the tooling that keeps it honest.</p>
+
+    <h2>Now showing</h2>
+    <table class="posters"><tr>
+      <td><div class="poster grain"><img src="https://utfs.io/f/FjrylqusFJ8WYvB7A2Wmt5wdKg6brlXxLU0BIJMuTjiEoFpv" alt=""><div class="shade"></div><div class="t"><div class="mono ember">Open source · 2026</div><div class="disp">shipreel</div><p>Turns a codebase into a launch video, then measures it before you post.</p></div></div></td>
+      <td><div class="poster grain"><img src="https://utfs.io/f/FjrylqusFJ8WnQsOSaU5hfVZoFBUTNqawli2rcu0t3m961bM" alt=""><div class="shade"></div><div class="t"><div class="mono ember">Platform · 2026</div><div class="disp">Trivia Devs</div><p>Developers share, review and rank learning resources, with an AI ask engine.</p></div></div></td>
+      <td><div class="poster grain"><img src="https://utfs.io/f/FjrylqusFJ8WWXxX2gwA2rcN94thJHX7GT5B6VY0SbPjMKw1" alt=""><div class="shade"></div><div class="t"><div class="mono ember">Game · 2026</div><div class="disp">Iya</div><p>A stealth game in 15th-century Benin City, shipped in 3D and 2D.</p></div></div></td>
+    </tr></table>
+    <div class="svgnote">3 posters, each links to its case file <span class="label-chip">image × 3</span></div>
+
+    <h2>Dailies</h2>
+    <div class="filmstrip"><div class="row">
+      <figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8WO6z03PnPxHOqSE1sZt6Ql4U8eGXMru3fnoiI" alt=""><figcaption>04 · Brand Bible</figcaption></figure><figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8WGmPaRhg5UJI2CxEciBrHq76pYsFGwMgPdy1Q" alt=""><figcaption>05 · HeartRank</figcaption></figure><figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8WvkgTCMoRFxmVEaPrKTgNq0OkjW3ZlCszi76y" alt=""><figcaption>06 · VUNA Calc</figcaption></figure><figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8W6LpJAvIwrU0VlRxfqFBeEgAtjCIMn8vPu15h" alt=""><figcaption>07 · Farm Ease</figcaption></figure><figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8W3GDiNhBRLlzReG1o9TrPQ4Z23t7vdVcYJyhi" alt=""><figcaption>08 · Realtime Chat</figcaption></figure><figure style="margin:0"><img src="https://utfs.io/f/FjrylqusFJ8WeZOtpMy8dhY7X2Nu6O1TwkEezo30WUvAFljQ" alt=""><figcaption>09 · irvinosazee.me</figcaption></figure>
+    </div></div>
+    <div class="svgnote">film strip of the rest, each frame links to its case file · kept current from the portfolio by the same Action <span class="label-chip">image</span></div>
+
+    <h2>Receipts</h2>
+    <div class="card" style="padding:6px 22px 18px"><div class="receipts">
+      <div><span class="k">shipreel</span><span class="v2">260 tests on every push · nightly render against the latest Hyperframes · on npm</span></div>
+      <div><span class="k">irvinosazee.me</span><span class="v2">Next.js 16 + Payload CMS · an MCP server so agents draft my case files · 271 tests</span></div>
+      <div><span class="k">Iya</span><span class="v2">One game, two engines: Three.js in 3D and a 2D build</span></div>
+      <div><span class="k">Trivia Devs</span><span class="v2">Trust-ranked resources and an AI ask engine for a developer community</span></div>
+    </div></div>
+    <div class="svgnote">receipts.svg (I'll check every line with you before it ships) <span class="label-chip">image</span></div>
+
+    <h2>On every set</h2>
+    <div class="credits">
+      <span class="mono">Frontend</span><img src="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,tailwind,vite,svelte,astro,threejs" alt="">
+      <span class="mono">Backend</span><img src="https://skillicons.dev/icons?i=nodejs,py,django,flask,php,java,supabase,firebase" alt="">
+      <span class="mono">Data</span><img src="https://skillicons.dev/icons?i=postgres,mongodb,mysql" alt="">
+      <span class="mono">Mobile</span><img src="https://skillicons.dev/icons?i=flutter,dart,swift" alt="">
+      <span class="mono">Ship</span><img src="https://skillicons.dev/icons?i=git,github,docker,vercel,vscode,figma" alt="">
+      <span class="mono">AI · Test</span><img src="https://skillicons.dev/icons?i=pytorch,tensorflow,jest,postman,npm,pycharm" alt="">
+    </div>
+    <div class="svgnote">every logo you have now, grouped by what it does</div>
+
+    <h2>Call sheet</h2>
+    <div class="card grain" style="padding:24px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+      <div><div class="mono">Hiring, or building something?</div><div class="disp" style="font-size:30px;margin-top:8px">Let's make the next one.</div></div>
+      <div class="cta"><span class="btn hot">Hire me</span><span class="btn">irvinosazee.me</span><span class="btn">LinkedIn</span></div>
+    </div>
+    <div class="svgnote">footer.svg + linked buttons <span class="label-chip">image</span></div>
+  </main>
+</div>
+</body></html>
