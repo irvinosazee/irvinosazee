@@ -1,0 +1,6 @@
+/* Repo fonts, loaded over file:// relative to this stylesheet. */
+@font-face { font-family: "Archivo"; font-weight: 700; src: url("../../../assets/fonts/Archivo-Bold.ttf"); }
+@font-face { font-family: "Geist Mono"; font-weight: 400; src: url("../../../assets/fonts/GeistMono-Regular.ttf"); }
+@font-face { font-family: "Geist Mono"; font-weight: 500; src: url("../../../assets/fonts/GeistMono-Medium.ttf"); }
+@font-face { font-family: "Instrument Sans"; font-weight: 400; src: url("../../../assets/fonts/InstrumentSans-Regular.ttf"); }
+@font-face { font-family: "Instrument Sans"; font-weight: 600; src: url("../../../assets/fonts/InstrumentSans-SemiBold.ttf"); }
