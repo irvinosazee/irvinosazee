@@ -50,18 +50,22 @@ export const POSTERS = [
     kicker: "OPEN SOURCE · 2026",
     name: "shipreel",
     line: "Turns a codebase into a launch video, then measures it before you post.",
+    // R10: the cover's focal point; shipreel's headline reads from the left edge.
+    objectPosition: "left center",
   },
   {
     slug: "trivia-devs",
     kicker: "PLATFORM · 2026",
     name: "Trivia Devs",
     line: "Developers share, review and rank learning resources, with an AI ask engine.",
+    objectPosition: "center",
   },
   {
     slug: "iya-guardians-of-the-sky-kings",
     kicker: "GAME · 2026",
     name: "Iya",
     line: "A stealth game in 15th-century Benin City, shipped in 3D and 2D.",
+    objectPosition: "center",
   },
 ];
 

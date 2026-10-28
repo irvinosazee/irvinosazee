@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="fonts.css">
 <style>
-  /* A poster is a photo card: it stays on film in both themes. Only its edge follows the theme. */
+  /* A poster is a photo card: one file serves both themes (R9), so it stays on film. */
   :root { --film: #121316; --film2: #18191d; --ink: #f2f1ee; --ember: #ff6a44; --edge: rgba(242,241,238,.09); --mark: rgba(242,241,238,.24); }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: transparent; }
@@ -51,6 +51,7 @@
       const img = document.createElement("img");
       img.className = "cover";
       img.alt = "";
+      img.style.objectPosition = poster.objectPosition || "center";
       img.src = coverUrl;
       el.prepend(img);
     } else {

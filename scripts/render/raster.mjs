@@ -41,18 +41,23 @@ async function settle(page) {
   if (broken.length) throw new Error(`cover image failed to load: ${broken.join(", ")}`);
 }
 
-/** A 3:4 poster, 270×360 CSS px (540×720 PNG). A null cover gives a plain film-ground poster. */
+/**
+ * A 3:4 poster, 270×360 CSS px (540×720 PNG). A null cover gives a plain film-ground poster.
+ * R9: one poster file serves both themes, so `theme` is accepted but does not change the card.
+ */
 export async function renderPoster(browser, theme, poster, coverUrl, outPath) {
-  const t = themeOf(theme);
-  // The card itself stays dark in both themes; in light, its edge is a crisp ink line
-  // so it sits deliberately on a white page.
-  const vars = theme === "light" ? { "--edge": t.ink } : { "--edge": t.line };
-  const page = await openTemplate(browser, "poster.html", { vars, poster, coverUrl: coverUrl ?? null });
+  const page = await openPoster(browser, theme, poster, coverUrl);
   try {
     await page.locator("#poster").screenshot({ path: outPath, type: "png", omitBackground: false });
   } finally {
     await page.close();
   }
+}
+
+/** Opens the poster template ready to screenshot. The caller closes the page. */
+export async function openPoster(browser, theme, poster, coverUrl) {
+  themeOf(theme);
+  return openTemplate(browser, "poster.html", { vars: {}, poster, coverUrl: coverUrl ?? null });
 }
 
 /** The dailies strip, 830 CSS px wide (1660 px PNG). Six slots; frames number from 04. */

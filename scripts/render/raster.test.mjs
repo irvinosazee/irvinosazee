@@ -4,7 +4,7 @@ import { readFileSync, statSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium } from "playwright";
-import { renderPoster, renderDailies, openDailies } from "./raster.mjs";
+import { renderPoster, renderDailies, openDailies, openPoster } from "./raster.mjs";
 import { fetchProjects, selectDailies } from "../data/projects.mjs";
 import { POSTERS } from "../content.mjs";
 
@@ -107,4 +107,23 @@ test("poster: a cover that fails to load throws instead of drawing a broken imag
     renderPoster(browser, "dark", POSTERS[0], missing, join(dir, "poster-broken.png")),
     /cover image failed to load/
   );
+});
+
+test("poster: the cover uses the poster's focal point (shipreel reads from the left)", async () => {
+  const shipreel = POSTERS.find((p) => p.slug === "shipreel");
+  const page = await openPoster(browser, "dark", shipreel, COVER);
+  try {
+    const pos = await page.$eval("img.cover", (img) => getComputedStyle(img).objectPosition);
+    assert.equal(pos, "0% 50%");
+  } finally {
+    await page.close();
+  }
+});
+
+test("poster: dark and light render the same card (R9)", async () => {
+  const a = join(dir, "same-dark.png");
+  const b = join(dir, "same-light.png");
+  await renderPoster(browser, "dark", POSTERS[1], COVER, a);
+  await renderPoster(browser, "light", POSTERS[1], COVER, b);
+  assert.ok(readFileSync(a).equals(readFileSync(b)));
 });
