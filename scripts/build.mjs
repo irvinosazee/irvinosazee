@@ -23,7 +23,9 @@ const FETCH_TIMEOUT_MS = 20_000;
 const THEME_NAMES = ["dark", "light"];
 const DATA = "assets/data.json";
 
-export async function build({ live, fetchImpl = globalThis.fetch, outDir = "." }) {
+const launchChromium = async () => (await import("playwright")).chromium.launch();
+
+export async function build({ live, fetchImpl = globalThis.fetch, outDir = ".", launchBrowser = launchChromium }) {
   const wrote = [];
   const kept = [];
   const warnings = [];
@@ -42,6 +44,11 @@ export async function build({ live, fetchImpl = globalThis.fetch, outDir = "." }
   const keep = (rel, why) => {
     if (!existsSync(path(rel))) throw new Error(`${rel} could not be rebuilt and has no last good copy: ${why}`);
     kept.push(rel);
+  };
+  /** Posters and dailies as they are; data keeps their last good covers and dailies. */
+  const keepRasters = (why) => {
+    for (const p of POSTERS) keep(`assets/poster-${p.slug}.png`, why);
+    for (const theme of THEME_NAMES) keep(`assets/dailies-${theme}.png`, why);
   };
 
   mkdirSync(path("assets"), { recursive: true });
@@ -71,11 +78,17 @@ export async function build({ live, fetchImpl = globalThis.fetch, outDir = "." }
     posterCovers: last?.posterCovers ?? {},
   };
 
-  if (projects) await renderRasters({ projects, data, last, path, wrote, keep, warnings });
-  else if (live) {
-    for (const p of POSTERS) keep(`assets/poster-${p.slug}.png`, "projects unavailable");
-    for (const theme of THEME_NAMES) keep(`assets/dailies-${theme}.png`, "projects unavailable");
-  }
+  if (projects) {
+    // A browser that will not start must not hold back the stats and README.
+    let browser = null;
+    try {
+      browser = await launchBrowser();
+    } catch (err) {
+      warnings.push(`browser failed to launch, keeping posters and dailies: ${err.message}`);
+      keepRasters(`browser failed to launch: ${err.message}`);
+    }
+    if (browser) await renderRasters({ browser, projects, data, last, path, wrote, keep, warnings });
+  } else if (live) keepRasters("projects unavailable");
 
   for (const theme of THEME_NAMES) {
     write(`assets/slate-${theme}.svg`, renderSlate(theme));
@@ -94,11 +107,8 @@ export async function build({ live, fetchImpl = globalThis.fetch, outDir = "." }
 }
 
 /** Posters and the dailies strip. A cover that fails to load keeps that image and its last good data. */
-async function renderRasters({ projects, data, last, path, wrote, keep, warnings }) {
-  const { chromium } = await import("playwright");
-  const { renderPoster, renderDailies } = await import("./render/raster.mjs");
+async function renderRasters({ browser, projects, data, last, path, wrote, keep, warnings }) {
   const bySlug = new Map(projects.projects.map((p) => [p.slug, p]));
-  const browser = await chromium.launch();
   // Render to a temporary file and move it into place only on success: a failure never clobbers.
   const tmp = (rel) => path(`${rel}.tmp.png`);
   const commit = (rel) => {
@@ -106,6 +116,7 @@ async function renderRasters({ projects, data, last, path, wrote, keep, warnings
     wrote.push(rel);
   };
   try {
+    const { renderPoster, renderDailies } = await import("./render/raster.mjs");
     for (const poster of POSTERS) {
       const rel = `assets/poster-${poster.slug}.png`;
       const project = bySlug.get(poster.slug);

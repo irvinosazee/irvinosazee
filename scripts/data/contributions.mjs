@@ -29,6 +29,15 @@ export function parseCalendar(html) {
     if (date && id && counts.has(id)) days.push({ date, count: counts.get(id) });
   }
   if (days.length === 0) throw new CalendarParseError("no contribution days found");
+  // A partial rewording of the tooltips must not pass as a quiet year: every calendar cell must
+  // parse (give or take a few), and a non-zero total needs at least one non-zero day.
+  const cells = [...html.matchAll(/<td\b[^>]*\bdata-date="/g)].length;
+  if (days.length < 0.9 * cells) {
+    throw new CalendarParseError(`only ${days.length} of ${cells} contribution days parsed`);
+  }
+  if (total > 0 && !days.some((d) => d.count > 0)) {
+    throw new CalendarParseError(`total is ${total} but no day has contributions`);
+  }
   return { total, days };
 }
 

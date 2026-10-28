@@ -27,6 +27,17 @@ test("parseCalendar throws when days are missing", () => {
   assert.throws(() => parseCalendar(h2), CalendarParseError);
 });
 
+test("parseCalendar throws when only the non-zero tooltips are reworded", () => {
+  const html = fixture("calendar.html").replace(/>(\d+) contributions? on /g, ">$1 commits on ");
+  assert.notEqual(html, fixture("calendar.html"), "fixture has non-zero days to reword");
+  assert.throws(() => parseCalendar(html), CalendarParseError);
+});
+
+test("parseCalendar throws when the total is non-zero but every day is zero", () => {
+  const html = fixture("calendar.html").replace(/>\d+ contributions? on /g, ">No contributions on ");
+  assert.throws(() => parseCalendar(html), /no day has contributions/);
+});
+
 test("computeStats", () => {
   const days = [3, 0, 1, 1, 1, 0, 2].map((count, i) => ({ date: `2025-01-0${i + 1}`, count }));
   assert.deepEqual(computeStats(days), { activeDays: 5, longestStreak: 3 });

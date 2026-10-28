@@ -15,6 +15,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -26,6 +27,9 @@ jobs:
       - run: npm ci
 
       - run: npx playwright install --with-deps chromium
+
+      # The tests render posters too, so they run once chromium is installed.
+      - run: npm test
 
       - name: Build (live)
         id: build

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { renderReadme } from "./readme.mjs";
+import { renderReadme, BUTTONS } from "./readme.mjs";
 import { build } from "./build.mjs";
 import { renderButton } from "./render/button.mjs";
 import { POSTERS, LINKS } from "./content.mjs";
@@ -106,6 +106,27 @@ test("stack rows and call-sheet buttons link where they should", () => {
   for (const [name, href] of [["hire", LINKS.hire], ["site", LINKS.site], ["linkedin", LINKS.linkedin]]) {
     assert.match(readme, new RegExp(`<a href="${href}"><picture><source [^>]*srcset="assets/button-${name}-dark\\.svg"`), name);
   }
+});
+
+test("slate and stats link to the site, the call sheet to the contact page", () => {
+  for (const [name, href] of [["slate", LINKS.site], ["stats", LINKS.site], ["callsheet", LINKS.hire]]) {
+    assert.match(readme, new RegExp(`<a href="${href}"><picture><source [^>]*srcset="assets/${name}-dark\\.svg"[^]*?</picture></a>`), name);
+  }
+  // Still one line box: slate, <br>, stats, each top-aligned so no gap opens between them.
+  assert.match(readme, /assets\/slate-light\.svg"[^>]*align="top"><\/picture><\/a><br><a href="[^"]+"><picture><source [^>]*stats-dark/);
+  assert.match(readme, /assets\/stats-light\.svg"[^>]*align="top">/);
+});
+
+test("buttons take a share of the 830 px card, in proportion to their drawn widths", () => {
+  const shares = BUTTONS.map((b) => {
+    const pct = readme.match(new RegExp(`button-${b.name}-light\\.svg"[^>]*\\bwidth="([\\d.]+)%"`))?.[1];
+    assert.ok(pct, b.name);
+    const px = Number(renderButton("dark", b).match(/\bwidth="(\d+)"/)[1]);
+    assert.ok(Math.abs((Number(pct) / 100) * 830 - px) < 0.5, `${b.name}: ${pct}% of 830 vs ${px}px`);
+    return Number(pct);
+  });
+  // The row fits a phone with room to spare (390 px viewport, about 320 px of content).
+  assert.ok(shares.reduce((a, b) => a + b) < 60);
 });
 
 test("no emoji and no org names", () => {
@@ -226,6 +247,34 @@ test("a poster missing from the published projects keeps its last good file", { 
   assert.equal(readFileSync(join(dir, "assets/poster-trivia-devs.png"), "utf8"), OLD["assets/poster-trivia-devs.png"]);
   const data = JSON.parse(readFileSync(join(dir, "assets/data.json"), "utf8"));
   assert.equal(data.posterCovers["trivia-devs"], COVER, "last good cover kept with the kept poster");
+});
+
+test("a browser that fails to launch keeps the rasters and still refreshes stats and README", async () => {
+  const dir = seeded();
+  const launchBrowser = async () => {
+    throw new Error("chromium missing");
+  };
+  const { wrote, kept, warnings } = await build({ live: true, fetchImpl: failing("nothing"), outDir: dir, launchBrowser });
+  const rasters = ["assets/dailies-dark.png", "assets/dailies-light.png", ...POSTERS.map((p) => `assets/poster-${p.slug}.png`)];
+  for (const path of rasters) {
+    assert.ok(kept.includes(path), path);
+    assert.equal(readFileSync(join(dir, path), "utf8"), OLD[path], path);
+  }
+  assert.equal(kept.length, rasters.length);
+  assert.ok(warnings.some((w) => /chromium missing/.test(w)));
+  for (const theme of ["dark", "light"]) {
+    const rel = `assets/stats-${theme}.svg`;
+    assert.ok(wrote.includes(rel), rel);
+    assert.match(readFileSync(join(dir, rel), "utf8"), /5,084 contributions/);
+  }
+  assert.ok(wrote.includes("README.md"));
+  const md = readFileSync(join(dir, "README.md"), "utf8");
+  assert.match(md, /<!-- dailies:start -->\n<a href="https:\/\/www\.irvinosazee\.me\/projects\/old-daily">Old Daily<\/a>\n<!-- dailies:end -->/);
+  const data = JSON.parse(readFileSync(join(dir, "assets/data.json"), "utf8"));
+  assert.equal(data.total, 5084);
+  assert.equal(data.shipped, 30);
+  assert.deepEqual(data.dailies, LAST_GOOD.dailies);
+  assert.deepEqual(data.posterCovers, LAST_GOOD.posterCovers);
 });
 
 test("daily names stop at the first ' · ' in captions and links (R12)", () => {
