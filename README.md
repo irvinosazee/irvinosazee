@@ -10,10 +10,10 @@ I build products end to end, then go the extra mile on the parts nobody asks for
 
 ## Dailies
 
-<a href="https://www.irvinosazee.me/projects"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/dailies-dark.png"><img src="assets/dailies-light.png" alt="Dailies: a film strip of more projects, Brand Bible, Private Chat, Portfolio v2, Graphic Design Agency Template, HeartRank, VUNA-Calc · Veritas Journey." width="830" align="top"></picture></a>
+<a href="https://www.irvinosazee.me/projects"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/dailies-dark.png"><img src="assets/dailies-light.png" alt="Dailies: a film strip of more projects, Brand Bible, Private Chat, Portfolio v2, Graphic Design Agency Template, HeartRank, VUNA-Calc." width="830" align="top"></picture></a>
 
 <!-- dailies:start -->
-<a href="https://www.irvinosazee.me/projects/brand-bible">Brand Bible</a> · <a href="https://www.irvinosazee.me/projects/realtime-chat">Private Chat</a> · <a href="https://www.irvinosazee.me/projects/portfolio-v2">Portfolio v2</a> · <a href="https://www.irvinosazee.me/projects/graphic-design-agency-template">Graphic Design Agency Template</a> · <a href="https://www.irvinosazee.me/projects/heartrank">HeartRank</a> · <a href="https://www.irvinosazee.me/projects/vuna-calc">VUNA-Calc · Veritas Journey</a>
+<a href="https://www.irvinosazee.me/projects/brand-bible">Brand Bible</a> · <a href="https://www.irvinosazee.me/projects/realtime-chat">Private Chat</a> · <a href="https://www.irvinosazee.me/projects/portfolio-v2">Portfolio v2</a> · <a href="https://www.irvinosazee.me/projects/graphic-design-agency-template">Graphic Design Agency Template</a> · <a href="https://www.irvinosazee.me/projects/heartrank">HeartRank</a> · <a href="https://www.irvinosazee.me/projects/vuna-calc">VUNA-Calc</a>
 <!-- dailies:end -->
 
 ## Receipts

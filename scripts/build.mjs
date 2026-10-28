@@ -10,7 +10,7 @@ import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { POSTERS } from "./content.mjs";
 import { fetchContributions } from "./data/contributions.mjs";
-import { fetchProjects, selectDailies } from "./data/projects.mjs";
+import { fetchProjects, selectDailies, dailyName } from "./data/projects.mjs";
 import { renderSlate } from "./render/slate.mjs";
 import { renderStats } from "./render/stats.mjs";
 import { renderReceipts } from "./render/receipts.mjs";
@@ -65,7 +65,8 @@ export async function build({ live, fetchImpl = globalThis.fetch, outDir = "." }
     total: contributions.total,
     activeDays: contributions.activeDays,
     longestStreak: contributions.longestStreak,
-    shipped: projects ? projects.shipped : last.shipped,
+    // R15: a kept stats image keeps all four numbers, so its alt text and data.json agree with it.
+    shipped: projects && !contributionsFailed ? projects.shipped : last.shipped,
     dailies: last?.dailies ?? [],
     posterCovers: last?.posterCovers ?? {},
   };
@@ -108,9 +109,9 @@ async function renderRasters({ projects, data, last, path, wrote, keep, warnings
     for (const poster of POSTERS) {
       const rel = `assets/poster-${poster.slug}.png`;
       const project = bySlug.get(poster.slug);
-      if (!project) warnings.push(`poster ${poster.slug} is not a published project; drawing it without a cover`);
       const cover = project?.cover ?? null;
       try {
+        if (!project) throw new Error(`${poster.slug} is not among the published projects`);
         await renderPoster(browser, "dark", poster, cover, tmp(rel));
         commit(rel);
         data.posterCovers[poster.slug] = cover;
@@ -124,7 +125,7 @@ async function renderRasters({ projects, data, last, path, wrote, keep, warnings
 
     const dailies = selectDailies(projects.projects, POSTERS.map((p) => p.slug)).map(({ slug, name, cover }) => ({
       slug,
-      name,
+      name: dailyName(name),
       cover,
     }));
     const rels = THEME_NAMES.map((theme) => `assets/dailies-${theme}.png`);

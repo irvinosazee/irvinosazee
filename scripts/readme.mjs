@@ -5,6 +5,7 @@ import { renderStats } from "./render/stats.mjs";
 import { renderReceipts } from "./render/receipts.mjs";
 import { renderCallsheet } from "./render/callsheet.mjs";
 import { esc } from "./render/svg.mjs";
+import { dailyName } from "./data/projects.mjs";
 
 /** The call-sheet buttons (R6): asset name, label, link and variant. */
 export const BUTTONS = [
@@ -42,12 +43,12 @@ function posters() {
 
 /** The text-link line under the dailies strip, between the R3 markers. */
 export function dailiesLine(dailies) {
-  const links = dailies.map((d) => `<a href="${LINKS.caseFile(d.slug)}">${esc(d.name)}</a>`).join(" · ");
+  const links = dailies.map((d) => `<a href="${LINKS.caseFile(d.slug)}">${esc(dailyName(d.name))}</a>`).join(" · ");
   return `${DAILIES_START}\n${links}\n${DAILIES_END}`;
 }
 
 function dailiesAlt(dailies) {
-  const names = dailies.map((d) => d.name).join(", ");
+  const names = dailies.map((d) => dailyName(d.name)).join(", ");
   return esc(names ? `Dailies: a film strip of more projects, ${names}.` : "Dailies: a film strip of more projects.");
 }
 

@@ -167,7 +167,15 @@ test("contributions failure keeps last stats", { timeout: 120_000 }, async () =>
   assert.notEqual(readFileSync(join(dir, "assets/dailies-dark.png"), "utf8"), OLD["assets/dailies-dark.png"]);
   const data = JSON.parse(readFileSync(join(dir, "assets/data.json"), "utf8"));
   assert.equal(data.total, LAST_GOOD.total);
-  assert.equal(data.shipped, 30);
+  // R15: the kept stats image, its alt text and data.json all keep the last good numbers.
+  assert.equal(data.shipped, LAST_GOOD.shipped);
+  const md = readFileSync(join(dir, "README.md"), "utf8");
+  assert.match(md, /alt="4,000 contributions in the last 12 months, 200 active days in the last 12 months, 20-day longest streak, 28 projects shipped\./);
+  // R12: dailies use the short name, in data.json (strip captions) and the link line.
+  const vuna = data.dailies.find((d) => d.slug === "vuna-calc");
+  assert.equal(vuna?.name, "VUNA-Calc");
+  assert.match(md, /projects\/vuna-calc">VUNA-Calc<\/a>/);
+  assert.doesNotMatch(md, /Veritas/);
 });
 
 test("projects failure keeps last dailies", { timeout: 120_000 }, async () => {
@@ -205,4 +213,25 @@ test("a cover that fails to load keeps only that poster", { timeout: 120_000 }, 
   const data = JSON.parse(readFileSync(join(dir, "assets/data.json"), "utf8"));
   assert.equal(data.posterCovers.shipreel, COVER, "last good cover kept with the kept poster");
   assert.ok(!existsSync(join(dir, "assets/poster-shipreel.png.tmp.png")));
+});
+
+test("a poster missing from the published projects keeps its last good file", { timeout: 120_000 }, async () => {
+  const dir = seeded();
+  const body = JSON.parse(projectsBody);
+  body.docs = body.docs.filter((d) => d.slug !== "trivia-devs");
+  const fetchImpl = async (url) =>
+    String(url).includes("/api/projects") ? new Response(JSON.stringify(body)) : failing("nothing")(url);
+  const { kept } = await build({ live: true, fetchImpl, outDir: dir });
+  assert.deepEqual(kept, ["assets/poster-trivia-devs.png"]);
+  assert.equal(readFileSync(join(dir, "assets/poster-trivia-devs.png"), "utf8"), OLD["assets/poster-trivia-devs.png"]);
+  const data = JSON.parse(readFileSync(join(dir, "assets/data.json"), "utf8"));
+  assert.equal(data.posterCovers["trivia-devs"], COVER, "last good cover kept with the kept poster");
+});
+
+test("daily names stop at the first ' · ' in captions and links (R12)", () => {
+  const md = renderReadme({ dailies: [{ slug: "vuna-calc", name: "VUNA-Calc · Veritas Journey" }, ...DAILIES], stats: STATS });
+  const line = md.match(/<!-- dailies:start -->\n([^\n]*)\n<!-- dailies:end -->/)[1];
+  assert.ok(line.startsWith('<a href="https://www.irvinosazee.me/projects/vuna-calc">VUNA-Calc</a> · '));
+  assert.equal(line.split(" · ").length, 4);
+  assert.doesNotMatch(md, /Veritas/);
 });

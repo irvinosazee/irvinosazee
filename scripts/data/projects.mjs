@@ -28,3 +28,6 @@ export function selectDailies(projects, exclude, n = 6) {
     )
     .slice(0, n);
 }
+
+/** R12: a daily's short name, up to the first " · " ("VUNA-Calc · Veritas Journey" → "VUNA-Calc"). */
+export const dailyName = (name) => String(name).split(" · ")[0].trim();
